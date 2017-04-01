@@ -1,4 +1,3 @@
-import pprint
 import sys
 import tkinter as tk
 import tkinter.messagebox as msgbox
@@ -73,8 +72,8 @@ imagedata = '''
 
 ## Queens class from http://svn.python.org/projects/python/trunk/Demo/scripts/queens.py
 
-N = 8   # Col count of chess board
-M = 1   # Solution count, add 1 to count that you want
+N = 8   # Number of Columns, for chess board
+M = 1   # Number of Solutions
 class Queens:
 
     def __init__(self, n=N, m=M):
@@ -94,7 +93,7 @@ class Queens:
         self.down = [0] * (2*n-1)               # Is downward diagonal[x+y] safe?
         self.nfound = 0                         # Instrumentation
 
-        # all solutions (3d array of zeros) [sol][row][col]
+        # All Solutions (3d array of zeros) [sol][row][col]
         self.sols = [[[0 for k in range(n)] for j in range(n)] for i in range(m+1)]
     def add(self, c, r, x):
         self.sols[c][r][x] = 1
@@ -126,11 +125,9 @@ class Queens:
         self.up[x-y] = 0
         self.down[x+y] = 0
 
-    silent = 0                          # If true, count solutions only
+    silent = 0
 
     def display(self):
-        if self.silent:
-            return
         rw=0
         print("------------------start----------------")
         for y in range(self.n-1, -1, -1):
@@ -162,14 +159,14 @@ def refresh():              # displaying chess border with a solution
         for j in range(q.n):                        # j is column
             if q.sols[solnum][i][j] == 1:
                 print ("[sol][row][col]", solnum,i,q.sols[solnum][i][j])
-                board.addpiece("player"+str(i) , player1 , i, j)
+                board.addpiece("player"+str(i) , player1 , i, j)    # adding a queen to the board
     print("---------------"+str(solnum+1)+"-------------------")
     labeltext = str(solnum+1) + ". Solution"        # changing label text
     solnum = (solnum + 1)%(M);
     label.configure(text=labeltext)
     root.mainloop()
 
-def getM():
+def getM(): # asking number of solutions
     global M
     global q
     a = "";
@@ -179,8 +176,8 @@ def getM():
             print("Must be a positive integer!!")
             getM()
         else:
-            if a>92:
-                print("Must be lower than 92!!")
+            if a>92:    # For a 64-cell board, max number of solutions is 92
+                print("Must be less than 92!!")
                 getM()
             else:
                 q = Queens(8,a)
